@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="/frontend/templates")
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
