@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Request, Depends
 from typing import Annotated
 from sqlalchemy.orm import Session
@@ -6,12 +7,17 @@ from starlette import status
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from routers.jwt_handler import get_current_user
-from database.basedata import SessionLocal, db_dependency
+from database.basedata import db_dependency
+from pathlib import Path
 
 
 word_router = APIRouter(prefix="/word", tags=["word"])
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(
+    directory=str(
+        Path(__file__).resolve().parent.parent.parent / "frontend" / "templates"
+    )
+)
 
 
 @word_router.get("/", response_class=HTMLResponse)

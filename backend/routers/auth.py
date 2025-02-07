@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Depends, Request, Response, status, Form, BackgroundTasks
 from jose import jwt, JWTError
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -13,11 +14,15 @@ from fastapi.templating import Jinja2Templates
 from database.basedata import db_dependency
 from dotenv import dotenv_values
 from dotenv import load_dotenv
+from pathlib import Path
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-templates = Jinja2Templates(directory="/frontend/templates")
-
+templates = Jinja2Templates(
+    directory=str(
+        Path(__file__).resolve().parent.parent.parent / "frontend" / "templates"
+    )
+)
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Load environment variables
@@ -47,8 +52,6 @@ async def create_user(create_user_request: CreateUserRequest, db: db_dependency)
 
 
 # Login and Token Generation
-
-
 @router.post("/token", response_model=Token)
 async def login_for_access_token(
     response: Response,
