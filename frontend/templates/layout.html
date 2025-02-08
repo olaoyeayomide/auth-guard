@@ -24,5 +24,10 @@
     <script src="{{ url_for('static', path='/authguard/js/jquery-slim.js') }}"></script>
     <script src="{{ url_for('static', path='/authguard/js/popper.js') }}"></script>
     <script src="{{ url_for('static', path='/authguard/js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', path='/authguard/js/main.js') }}"></script>
+    <script>
+      const apiUrl = "{{ api_url }}";
+      console.log(apiUrl);
+    </script>
   </body>
 </html>

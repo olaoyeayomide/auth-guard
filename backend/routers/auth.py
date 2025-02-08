@@ -80,6 +80,15 @@ async def authenticationpage(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
 
+# Server Index
+@router.get("/", response_class=HTMLResponse)
+def serve_index(request: Request):
+    api_url = os.getenv("API_URL")
+    return templates.TemplateResponse(
+        "index.html", {"request": request, "api_url": api_url}
+    )
+
+
 # Login Processing
 @router.post("/", response_class=HTMLResponse)
 async def login(request: Request, db: db_dependency):
