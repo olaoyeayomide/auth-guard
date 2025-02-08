@@ -6,8 +6,8 @@ from starlette.responses import RedirectResponse
 from starlette import status
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from routers.jwt_handler import get_current_user
-from database.basedata import db_dependency
+from backend.routers.jwt_handler import get_current_user
+from backend.database.basedata import db_dependency
 from pathlib import Path
 
 

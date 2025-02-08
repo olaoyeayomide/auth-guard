@@ -10,17 +10,12 @@ from dotenv import load_dotenv
 
 ALGORITHM = "HS256"
 
-# Load environment variables
 load_dotenv()
-# config_credential = dotenv_values(".env")
 
 config_credential = {
     "SECRET_KEY": os.getenv("SECRET_KEY"),
     # "ALGORITHM": "HS256"
 }
-
-print("Config Credentials:", config_credential)
-
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

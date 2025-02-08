@@ -1,20 +1,28 @@
 import os
-from fastapi import APIRouter, Depends, Request, Response, status, Form, BackgroundTasks
-from jose import jwt, JWTError
-from fastapi.responses import HTMLResponse, RedirectResponse
-from typing import Annotated
-from routers.jwt_handler import authenticate_user, create_access_token
-from routers.email_handler import send_reset_email
-from models import User
-from schemas.auth_schemas import CreateUserRequest, Token, Loginform
 from datetime import timedelta
-from passlib.context import CryptContext
+from pathlib import Path
+
+from dotenv import load_dotenv
+from fastapi import APIRouter, Depends, Request, Response, status, Form, BackgroundTasks
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
-from database.basedata import db_dependency
-from dotenv import dotenv_values
-from dotenv import load_dotenv
-from pathlib import Path
+from jose import jwt, JWTError
+from passlib.context import CryptContext
+from typing import Annotated
+
+# Local imports
+from backend.database.basedata import db_dependency
+from backend.models import User
+from backend.schemas.auth_schemas import CreateUserRequest, Token, Loginform
+from .jwt_handler import authenticate_user, create_access_token
+from .email_handler import send_reset_email
+
+# Load environment variables
+load_dotenv()
+
+config_credential = {"SECRET_KEY": os.getenv("SECRET_KEY")}
+
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -23,11 +31,8 @@ templates = Jinja2Templates(
         Path(__file__).resolve().parent.parent.parent / "frontend" / "templates"
     )
 )
-bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# Load environment variables
-load_dotenv()
-config_credential = dotenv_values(".env")
+bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 # User Creation

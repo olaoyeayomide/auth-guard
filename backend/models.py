@@ -1,10 +1,12 @@
-from database.basedata import Base
+from backend.database.basedata import Base
 from sqlalchemy import Column, Integer, String, Boolean
 
-class User(Base):
-    __tablename__ = 'users'
 
-    id= Column(Integer, primary_key=True, index=True)
+class User(Base):
+    __tablename__ = "users"
+    __table_args__ = {"extend_existing": True}
+
+    id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True)
     first_name = Column(String)
     last_name = Column(String)
